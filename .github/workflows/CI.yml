@@ -1,0 +1,62 @@
+name: CI Test
+
+on:
+  push:
+    branches:
+      - main
+ 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+           
+      - name: Install Mise
+        uses: jdx/mise-action@v2
+        with:
+          install: false
+      
+      - name: Parse tool version with mise  
+        run: mise list --current | awk '{ printf "%s_VERSION=%s\n", toupper($1), $2; }'  >> $GITHUB_ENV 
+    
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: ${{ env.POETRY_VERSION }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+    
+      - name: Restore the deps cache
+        uses: actions/cache@v4
+        id: deps-cache
+        with:
+          path: .venv
+          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-lockhash-${{ hashFiles(format('{0}{1}', github.workspace, '/poetry.lock')) }}
+
+      - name: Install dependencies
+        run: |
+          poetry install
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        env:
+          POETRY_HTTP_BASIC_AZURE_ARTIFACTS_USERNAME: ${{ secrets.POETRY_HTTP_BASIC_AZURE_ARTIFACTS_USERNAME }}
+
+      - name: run linting
+        run: |
+          poetry run ruff check .
+      
+      - name: run type checking
+        run: |
+          poetry run mypy .
+
+      - name: run tests
+        run: |
+          poetry run pytest
