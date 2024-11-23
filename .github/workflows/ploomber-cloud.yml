@@ -50,4 +50,4 @@ jobs:
         env:
           PLOOMBER_CLOUD_KEY: ${{ secrets.PLOOMBER_CLOUD_KEY }}
         run: |
-          ploomber-cloud deploy --watch-incremental
+          poetry run ploomber-cloud deploy --watch-incremental
