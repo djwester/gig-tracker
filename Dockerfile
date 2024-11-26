@@ -30,4 +30,6 @@ COPY --from=builder /opt/pysetup /opt/pysetup
 ENV PATH="$PATH:$POETRY_HOME/bin"
 WORKDIR /opt/pysetup
 
+EXPOSE 80
+
 ENTRYPOINT ["poetry", "run", "solara", "run", "gig-tracker/ui/pages/__init__.py", "--host=0.0.0.0", "--port=80"]
