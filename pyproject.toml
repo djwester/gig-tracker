@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "gig-tracker"
+name = "gigtracker"
 version = "0.1.0"
 description = ""
 authors = ["Dave Westerveld <davewesterveld@gmail.com>"]

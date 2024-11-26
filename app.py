@@ -9,4 +9,4 @@ async def root():
     return {"message": "Hello World"}
 
 
-app.mount("/gig-tracker/ui/pages/", app=solara.server.fastapi.app)
+app.mount("/gigtracker/ui/", app=solara.server.fastapi.app)
