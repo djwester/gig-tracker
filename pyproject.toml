@@ -10,6 +10,7 @@ package-mode = false
 python = "^3.12"
 solara = "^1.41.0"
 ploomber-cloud = "^0.3.2"
+fastapi = "^0.115.5"
 
 
 [tool.poetry.group.dev.dependencies]
