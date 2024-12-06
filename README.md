@@ -1,5 +1,16 @@
 # Running locally
+You can run locally with fastapi:
 
+```shell
+fastapi run gigtracker/app.py
+```
+
+If you want to run in development mode and specifying a non-default port you can do that:
+```shell
+fastapi dev gigtracker/app.py --port 4001
+```
+
+FastAPI uses uvicorn, so if you wanted you could instead run with uvicorn:
 ```shell
 uvicorn app:app --reload --port 4001
 ```
