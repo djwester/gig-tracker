@@ -1,0 +1,30 @@
+{% extends "./base.html" %}
+
+{% block test %}
+
+<div class="show-gigs flex items-center justify-center relative" style="top: 10px;">
+    <div>
+        <h1 class="text-2xl mb-4">Gigs</h1>
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Venue</th>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gig in gigs %}
+                <tr>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ gig.venue }}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ gig.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

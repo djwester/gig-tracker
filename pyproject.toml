@@ -10,7 +10,11 @@ package-mode = false
 python = "^3.12"
 solara = "^1.41.0"
 ploomber-cloud = "^0.3.2"
-fastapi = "^0.115.5"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+pytailwindcss = "^0.2.0"
+sqlmodel = "^0.0.22"
+jinja2-fragments = "^1.6.0"
+python-multipart = "^0.0.19"
 
 
 [tool.poetry.group.dev.dependencies]

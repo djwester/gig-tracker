@@ -19,10 +19,14 @@ COPY pyproject.toml poetry.lock .mise.toml ./
 RUN POETRY_VERSION=$(grep -h poetry .mise.toml | awk -F"'" '{print $2}') && \
     curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
 
-COPY ./gig-tracker/ ./gig-tracker
-RUN poetry install -n
+COPY ./gigtracker/ ./gigtracker
+COPY app.py .
+RUN poetry install -n --without dev
 
 FROM python AS runtime
+
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/python3120/lib
+ENV POETRY_HOME="/opt/poetry"
 
 COPY --from=builder $POETRY_HOME $POETRY_HOME
 COPY --from=builder /opt/pysetup /opt/pysetup
@@ -32,4 +36,4 @@ WORKDIR /opt/pysetup
 
 EXPOSE 80
 
-ENTRYPOINT ["poetry", "run", "solara", "run", "gig-tracker/ui/pages/__init__.py", "--host=0.0.0.0", "--port=80"]
+ENTRYPOINT ["poetry", "run", "uvicorn", "app:app", "--reload", "--host=0.0.0.0", "--port=80"]
