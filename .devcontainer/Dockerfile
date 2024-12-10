@@ -20,7 +20,6 @@ RUN POETRY_VERSION=$(grep -h poetry .mise.toml | awk -F"'" '{print $2}') && \
     curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
 
 COPY ./gigtracker/ ./gigtracker
-COPY app.py .
 RUN poetry install -n --without dev
 
 FROM python AS runtime
