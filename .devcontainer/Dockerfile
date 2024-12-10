@@ -11,7 +11,8 @@ FROM python AS builder
 RUN apt-get update \
     && apt-get install --no-install-recommends -y curl \
     && apt-get install -y libpq-dev \
-    && apt-get install -y build-essential
+    && apt-get install -y build-essential \
+    && apt-get -y install --no-install-recommends postgresql-client
 
 WORKDIR /opt/pysetup
 COPY pyproject.toml poetry.lock .mise.toml ./
@@ -35,4 +36,4 @@ WORKDIR /opt/pysetup
 
 EXPOSE 80
 
-ENTRYPOINT ["poetry", "run", "uvicorn", "app:app", "--reload", "--host=0.0.0.0", "--port=80"]
+# ENTRYPOINT ["poetry", "run", "uvicorn", "app:app", "--reload", "--host=0.0.0.0", "--port=80"]
