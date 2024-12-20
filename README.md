@@ -1,5 +1,10 @@
 # Running locally
-You can run locally with fastapi:
+Before running you should activate the poetry shell
+```shell
+poetry shell
+```
+
+You can then run locally with fastapi:
 
 ```shell
 fastapi run gigtracker/app.py
@@ -14,9 +19,13 @@ FastAPI uses uvicorn, so if you wanted you could instead run with uvicorn:
 ```shell
 uvicorn app:app --reload --port 4001
 ```
+If you want to make changes to the app, you should run tailwinds to regenerate the css as you change it
+
+```shell
+tailwindcss -i ./gigtracker/static/src/tailwind.css -o ./gigtracker/static/css/main.css --watch
+```
 
 # Deploying the app
-
 
 ## Local Testing
 To test the docker container locally run the following commands
