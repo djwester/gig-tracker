@@ -4,9 +4,9 @@ from fastapi import FastAPI
 from fastapi.security import HTTPBasic
 from fastapi.staticfiles import StaticFiles
 
-from gigtracker.api_routes import api_router
+from gigtracker.routes.gig_routes import api_router
+from gigtracker.routes.ui_routes import ui_router
 from gigtracker.schema.base import create_db_and_tables, drop_db_and_tables
-from gigtracker.ui_routes import ui_router
 
 
 @asynccontextmanager
