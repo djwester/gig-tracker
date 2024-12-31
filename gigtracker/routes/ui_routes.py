@@ -18,11 +18,6 @@ def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@ui_router.get("/api")
-def root():
-    return {"message": "Hello World"}
-
-
 @ui_router.get("/gigs")
 def gigs(request: Request, session=Depends(get_session)):
     statement = select(Gig)
