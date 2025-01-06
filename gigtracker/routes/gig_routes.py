@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
@@ -44,7 +44,7 @@ def update_gig(gig_id: int, gig: GigCreate, session: SessionDep):
 
 
 @gig_router.delete("/gigs/{gig_id}", status_code=204)
-def delete_gig(gig_id: int, session: SessionDep) -> dict:
+def delete_gig(gig_id: int, session: SessionDep):
     gig = session.get(Gig, gig_id)
     if not gig:
         raise HTTPException(status_code=404, detail="Gig not found")
@@ -52,4 +52,4 @@ def delete_gig(gig_id: int, session: SessionDep) -> dict:
     session.delete(gig)
     session.commit()
 
-    return {"message": "Gig deleted"}
+    return Response(status_code=204)
