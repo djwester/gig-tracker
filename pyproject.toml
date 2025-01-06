@@ -17,6 +17,7 @@ jinja2-fragments = "^1.6.0"
 python-multipart = "^0.0.19"
 types-passlib = "^1.7.7.20241221"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pydantic-extra-types = "^2.10.1"
 
 
 [tool.poetry.group.dev.dependencies]

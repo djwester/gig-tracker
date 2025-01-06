@@ -2,31 +2,17 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from passlib.context import CryptContext
 from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.user import User, UserCreate, UserPublic
+from gigtracker.security import authenticate_user, pwd_context
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
 user_router = APIRouter(prefix="/api")
 
 basic_auth_security = HTTPBasic()
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def authenticate_user(user: User | None, password: str) -> User | bool:
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return True
 
 
 @user_router.get("/users/{user_id}", response_model=UserPublic)
