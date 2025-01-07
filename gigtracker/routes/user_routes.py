@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.user import User, UserCreate, UserPublic
-from gigtracker.security import authenticate_user, pwd_context
+from gigtracker.security import authenticate_user, hash_password
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
@@ -56,7 +56,7 @@ def get_users(
     status_code=status.HTTP_201_CREATED,
 )
 def create_user(user: UserCreate, session: SessionDep):
-    pwd_data = {"hashed_password": pwd_context.hash(user.password)}
+    pwd_data = {"hashed_password": hash_password(user.password)}
     db_user = User.model_validate(user, update=pwd_data)
 
     session.add(db_user)
