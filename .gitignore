@@ -1,3 +1,4 @@
 __pycache__/
 database.db
 SQL_Lite_gigtracker.session.sql
+.vscode/
