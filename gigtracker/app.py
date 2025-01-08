@@ -7,6 +7,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from sqlmodel import Session, select
 
+from gigtracker.logger_settings import logger
 from gigtracker.routes.client_routes import client_router
 from gigtracker.routes.gig_routes import gig_router
 from gigtracker.routes.ui_routes import ui_router
@@ -41,6 +42,7 @@ def login(
 ):
     user = session.exec(select(User).where(User.username == form_data.username)).first()
     if not authenticate_user(user, form_data.password):
+        logger.info(f"User {form_data.username} failed to log in")
         raise HTTPException(status_code=401, detail="Incorrect username or password")
     assert user  # for mypytype checking
 

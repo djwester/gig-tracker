@@ -4,7 +4,6 @@ import bcrypt
 import jwt
 from jwt.exceptions import InvalidTokenError
 
-from gigtracker.schema.security import TokenData
 from gigtracker.schema.user import User
 
 SECRET_KEY = "c06497d1ff90e59d21d5bd57ba5160243e537ca69d999bba19772c1363ba43c8"
@@ -40,7 +39,6 @@ def verify_token(token: str) -> bool:
         username: str = payload.get("sub")
         if username is None:
             return False
-        token_data = TokenData(username=username)
     except InvalidTokenError:
         return False
 
