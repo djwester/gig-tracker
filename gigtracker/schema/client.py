@@ -2,12 +2,14 @@ from pydantic import EmailStr
 from pydantic_extra_types.phone_numbers import PhoneNumber
 from sqlmodel import Field, SQLModel
 
+PhoneNumber.phone_format = "E164"
+
 
 class ClientBase(SQLModel):
     email_address: EmailStr
     first_name: str
     last_name: str
-    phone_number: PhoneNumber
+    phone_number: str  # TODO: Change to PhoneNumber
     address: str
     city: str
     province: str
