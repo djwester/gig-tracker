@@ -2,9 +2,11 @@ from contextlib import asynccontextmanager
 from datetime import timedelta
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.middleware import SlowAPIMiddleware
 from sqlmodel import Session, select
 
 from gigtracker.logger_settings import logger
@@ -20,6 +22,7 @@ from gigtracker.security import (
     authenticate_user,
     create_access_token,
 )
+from rate_limiter import limiter
 
 
 @asynccontextmanager
@@ -30,6 +33,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.state.limiter = limiter
+request: Request
+app.add_exception_handler(429, _rate_limit_exceeded_handler)  # type: ignore
+app.add_middleware(SlowAPIMiddleware)
 
 
 SessionDep = Annotated[Session, Depends(get_session)]

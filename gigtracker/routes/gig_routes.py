@@ -1,16 +1,18 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.gig import Gig, GigCreate, GigPublic
+from rate_limiter import limiter
 
 SessionDep = Annotated[Session, Depends(get_session)]
 gig_router = APIRouter(prefix="/api")
 
 
 @gig_router.post("/gigs", response_model=GigPublic, status_code=201)
+@limiter.limit("5/minute")
 def create_gig(gig: GigCreate, session: SessionDep):
     db_gig = Gig.model_validate(gig)
 
@@ -22,13 +24,15 @@ def create_gig(gig: GigCreate, session: SessionDep):
 
 
 @gig_router.get("/gigs", response_model=list[GigPublic])
-def get_gigs(session: SessionDep):
+@limiter.limit("1/second")
+def get_gigs(request: Request, session: SessionDep):
     gigs = session.exec(select(Gig)).all()
 
     return list(gigs)
 
 
 @gig_router.put("/gigs/{gig_id}", response_model=GigPublic)
+@limiter.limit("25/minute")
 def update_gig(gig_id: int, gig: GigCreate, session: SessionDep):
     db_gig = session.get(Gig, gig_id)
     if not db_gig:
@@ -44,6 +48,7 @@ def update_gig(gig_id: int, gig: GigCreate, session: SessionDep):
 
 
 @gig_router.delete("/gigs/{gig_id}", status_code=204)
+@limiter.limit("10/minute")
 def delete_gig(gig_id: int, session: SessionDep):
     gig = session.get(Gig, gig_id)
     if not gig:
