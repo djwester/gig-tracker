@@ -24,7 +24,7 @@ def create_gig(request: Request, gig: GigCreate, session: SessionDep):
 
 
 @gig_router.get("/gigs", response_model=list[GigPublic])
-@limiter.limit("1/second")
+@limiter.limit("2/second")
 def get_gigs(request: Request, session: SessionDep):
     gigs = session.exec(select(Gig)).all()
 
@@ -32,7 +32,7 @@ def get_gigs(request: Request, session: SessionDep):
 
 
 @gig_router.put("/gigs/{gig_id}", response_model=GigPublic)
-@limiter.limit("25/minute")
+@limiter.limit("10/minute")
 def update_gig(request: Request, gig_id: int, gig: GigCreate, session: SessionDep):
     db_gig = session.get(Gig, gig_id)
     if not db_gig:
@@ -48,7 +48,7 @@ def update_gig(request: Request, gig_id: int, gig: GigCreate, session: SessionDe
 
 
 @gig_router.delete("/gigs/{gig_id}", status_code=204)
-@limiter.limit("10/minute")
+@limiter.limit("4/minute")
 def delete_gig(request: Request, gig_id: int, session: SessionDep):
     gig = session.get(Gig, gig_id)
     if not gig:
