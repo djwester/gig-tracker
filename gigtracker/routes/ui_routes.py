@@ -14,19 +14,19 @@ templates = Jinja2Blocks(directory="gigtracker/templates")
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
-@ui_router.get("/")
+@ui_router.get("/", include_in_schema=False)
 def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@ui_router.get("/gigs")
+@ui_router.get("/gigs", include_in_schema=False)
 def gigs(request: Request, session: SessionDep):
     result = session.exec(select(Gig)).all()
 
     return templates.TemplateResponse("gigs.html", {"request": request, "gigs": result})
 
 
-@ui_router.post("/gigs")
+@ui_router.post("/gigs", include_in_schema=False)
 def create_gig(
     request: Request,
     gig_date: Annotated[date, Form()],
