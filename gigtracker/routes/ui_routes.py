@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, Request
 from jinja2_fragments.fastapi import Jinja2Blocks
-from sqlmodel import select
+from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.gig import Gig
@@ -11,6 +11,7 @@ from gigtracker.schema.gig import Gig
 ui_router = APIRouter()
 
 templates = Jinja2Blocks(directory="gigtracker/templates")
+SessionDep = Annotated[Session, Depends(get_session)]
 
 
 @ui_router.get("/")
@@ -19,11 +20,10 @@ def index(request: Request):
 
 
 @ui_router.get("/gigs")
-def gigs(request: Request, session=Depends(get_session)):
-    statement = select(Gig)
-    result = session.exec(statement)
+def gigs(request: Request, session: SessionDep):
+    result = session.exec(select(Gig)).all()
 
-    return templates.TemplateResponse("gigs.html", {"request": request, "gig": result})
+    return templates.TemplateResponse("gigs.html", {"request": request, "gigs": result})
 
 
 @ui_router.post("/gigs")
@@ -42,4 +42,3 @@ def create_gig(
         {"request": request, "gigs": [gig]},
         block_name="test",
     )
-    return templates.TemplateResponse("gigs.html", {"request": request, "gig": gig})

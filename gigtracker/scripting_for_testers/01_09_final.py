@@ -1,7 +1,6 @@
 import requests
 
 base_url = "http://localhost:4001"
-notification_window = 5  # hours
 
 
 def create_gig(venue, date, time):
