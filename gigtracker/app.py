@@ -14,6 +14,7 @@ from gigtracker.routes.client_routes import client_router
 from gigtracker.routes.gig_routes import gig_router
 from gigtracker.routes.ui_routes import ui_router
 from gigtracker.routes.user_routes import user_router
+from gigtracker.routes.venue_routes import venue_router
 from gigtracker.schema.base import create_db_and_tables, drop_db_and_tables, get_session
 from gigtracker.schema.security import Token
 from gigtracker.schema.user import User
@@ -65,5 +66,6 @@ app.include_router(ui_router)
 app.include_router(gig_router)
 app.include_router(user_router)
 app.include_router(client_router)
+app.include_router(venue_router)
 
 app.mount("/static", StaticFiles(directory="gigtracker/static"), name="static")

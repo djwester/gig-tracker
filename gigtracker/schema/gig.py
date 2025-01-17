@@ -1,10 +1,11 @@
-from datetime import datetime
+from datetime import date, time
 
 from sqlmodel import Field, SQLModel
 
 
 class GigBase(SQLModel):
-    date: datetime
+    date: date
+    time: time
     venue: str
 
 
@@ -12,8 +13,7 @@ class Gig(GigBase, table=True):
     id: int = Field(default=None, primary_key=True)
 
 
-class GigCreate(GigBase):
-    date: datetime
+class GigCreate(GigBase): ...
 
 
 class GigPublic(GigBase):

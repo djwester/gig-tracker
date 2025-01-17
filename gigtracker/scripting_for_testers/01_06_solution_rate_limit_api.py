@@ -6,7 +6,6 @@ for _ in range(10):
     response = requests.post(
         f"{base_url}/api/gigs",
         json={
-            "name": "Test Gig",
             "venue": "Test Venue",
             "date": "2022-01-01",
             "time": "12:00",
@@ -31,7 +30,6 @@ for _ in range(15):
     response = requests.put(
         f"{base_url}/api/gigs/{gig_id}",
         json={
-            "name": "Updated Gig",
             "venue": "Updated Venue",
             "date": "2022-01-01",
             "time": "12:00",
