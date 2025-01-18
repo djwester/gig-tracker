@@ -3,11 +3,12 @@ import requests
 base_url = "http://localhost:4001"
 
 
-def create_gig(venue, date, time):
+def create_gig(venue_id, client_id, date, time):
     response = requests.post(
         f"{base_url}/api/gigs",
         json={
-            "venue": venue,
+            "venue_id": venue_id,
+            "client_id": client_id,
             "date": date,
             "time": time,
         },

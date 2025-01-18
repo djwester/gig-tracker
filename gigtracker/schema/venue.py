@@ -1,4 +1,9 @@
-from sqlmodel import Field, SQLModel
+from typing import TYPE_CHECKING
+
+from sqlmodel import Field, Relationship, SQLModel
+
+if TYPE_CHECKING:
+    from .gig import Gig
 
 
 class VenueBase(SQLModel):
@@ -13,6 +18,8 @@ class VenueBase(SQLModel):
 
 class Venue(VenueBase, table=True):
     id: int = Field(default=None, primary_key=True)
+
+    gigs: list["Gig"] = Relationship(back_populates="venue")
 
 
 class VenueCreate(VenueBase): ...
