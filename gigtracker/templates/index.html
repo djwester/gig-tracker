@@ -4,7 +4,12 @@
 
 {% block content %}
 <div class="add-gig flex items-center justify-center relative" style="top: 100px;">
-    <button class="bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded" onclick="toggleForm()"">
+    <button 
+        id="add-gig-button"
+        type="button"
+        class="bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded"
+        onclick="toggleForm()"
+    >
         Add a Gig
     </button>
 </div> 
@@ -26,7 +31,20 @@
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="gig-date" type="date">
         </div>
+        <div class="mb-4">
+            <label id="venue-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-venue" >Venue</label>
+            <select 
+                id="gig-venue"
+                hx-get="/load_venue_options"
+                hx-trigger="load"
+            > </select>
+        </div>
         <div class="flex items-center justify-between">
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button" onclick="toggleForm()">
+                Cancel
+            </button>
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 id="submit-button"
@@ -36,11 +54,7 @@
                 onclick="toggleForm()">
                 Submit
             </button>
-            <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button" onclick="toggleForm()">
-                Cancel
-            </button>
+            
         </div>
     </form>
 </div>

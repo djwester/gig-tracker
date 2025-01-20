@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, Request
@@ -7,6 +7,7 @@ from sqlmodel import Session, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.gig import Gig
+from gigtracker.schema.venue import Venue
 
 ui_router = APIRouter()
 
@@ -33,12 +34,26 @@ def create_gig(
     gig_name: Annotated[str, Form()],
     session=Depends(get_session),
 ):
-    gig = Gig(date=gig_date, venue=gig_name, location="Unknown")
+    gig = Gig(
+        date=gig_date,
+        name=gig_name,
+        time=time.fromisoformat("03:55"),
+        venue_id=1,
+        client_id=2,
+    )
     session.add(gig)
     session.commit()
 
     return templates.TemplateResponse(
         "gigs.html",
         {"request": request, "gigs": [gig]},
-        block_name="test",
+    )
+
+
+@ui_router.get("/load_venue_options", include_in_schema=False)
+def get_venues_as_options(request: Request, session: SessionDep):
+    venues = session.exec(select(Venue)).all()
+
+    return templates.TemplateResponse(
+        "snippets/venue_as_options.html", {"request": request, "venues": venues}
     )

@@ -9,6 +9,7 @@ from gigtracker.schema.venue import Venue
 class GigBase(SQLModel):
     date: date
     time: time
+    name: str
 
 
 class Gig(GigBase, table=True):
