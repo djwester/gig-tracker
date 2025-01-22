@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, Request
 from jinja2_fragments.fastapi import Jinja2Blocks
-from sqlmodel import Session, select
+from sqlmodel import Session, col, select
 
 from gigtracker.schema.base import get_session
 from gigtracker.schema.gig import Gig
@@ -45,8 +45,7 @@ def create_gig(
     session.commit()
 
     return templates.TemplateResponse(
-        "gigs.html",
-        {"request": request, "gigs": [gig]},
+        "gigs.html", {"request": request, "gigs": [gig]}, block_name="content"
     )
 
 
@@ -56,4 +55,15 @@ def get_venues_as_options(request: Request, session: SessionDep):
 
     return templates.TemplateResponse(
         "snippets/venue_as_options.html", {"request": request, "venues": venues}
+    )
+
+
+@ui_router.post("/search", include_in_schema=False)
+def search(request: Request, session: SessionDep, search: Annotated[str, Form()]):
+    # search_results = session.exec(select(Gig).where(Gig.name.like(f"%{search}%"))).all()
+    search_results = session.exec(
+        select(Gig).where(col(Gig.name).contains(search))
+    ).all()
+    return templates.TemplateResponse(
+        "search.html", {"request": request, "search_results": search_results}
     )
