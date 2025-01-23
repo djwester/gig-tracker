@@ -686,8 +686,16 @@ video {
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .items-center {
   align-items: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -704,6 +712,10 @@ video {
 
 .gap-96 {
   gap: 24rem;
+}
+
+.gap-20 {
+  gap: 5rem;
 }
 
 .overflow-y-auto {
@@ -808,6 +820,14 @@ video {
 
 .p-10 {
   padding: 2.5rem;
+}
+
+.p-24 {
+  padding: 6rem;
+}
+
+.p-20 {
+  padding: 5rem;
 }
 
 .px-2 {

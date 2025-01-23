@@ -27,6 +27,15 @@ def gigs(request: Request, session: SessionDep):
     return templates.TemplateResponse("gigs.html", {"request": request, "gigs": result})
 
 
+@ui_router.get("/venues", include_in_schema=False)
+def venues(request: Request, session: SessionDep):
+    result = session.exec(select(Venue)).all()
+
+    return templates.TemplateResponse(
+        "venue.html", {"request": request, "venues": result}
+    )
+
+
 @ui_router.post("/gigs", include_in_schema=False)
 def create_gig(
     request: Request,
