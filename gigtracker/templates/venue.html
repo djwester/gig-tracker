@@ -13,6 +13,7 @@
     }
     .flex-1-1-33 {
         flex: 1 1 calc(33.333% - 20px);
+        padding: 10px;
     }
 </style>
 
@@ -78,18 +79,18 @@
 </div>
 
 <div class="flex-container">
-    <div class="flex-1-1-33 p-20 justify-center"></div>
-    <div class="flex-1-1-33 p-20 justify-center">
+    <div class="flex-1-1-33 justify-center"></div>
+    <div class="flex-1-1-33 justify-center">
         <h1 class="text-2xl mb-4">Venues</h1>
     </div>
-    <div class="flex-1-1-33 p-20 justify-center">
+    <div class="flex-1-1-33 justify-center">
         <button id="add-venue-button" type="button" class="bg-sky-500 hover:bg-sky-700 text-white py-2 px-4 rounded"
             onclick="toggleForm()">
             Add a Venue
         </button>
     </div>
-    <div class="flex-1-1-33 p-20 justify-center"></div>
-    <div class="flex-1-1-33 p-20 justify-center"><table class="min-w-full bg-white">
+    <div class="flex-1-1-33 justify-center"></div>
+    <div class="flex-1-1-33 justify-center"><table class="min-w-full bg-white">
         <thead>
             <tr>
                 <th
@@ -109,7 +110,7 @@
             {% endfor %}
         </tbody>
     </table></div>
-    <div class="flex-1-1-33 p-20 justify-center"></div>
+    <div class="flex-1-1-33 justify-center"></div>
 </div>
 
 
