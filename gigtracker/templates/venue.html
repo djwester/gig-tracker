@@ -22,7 +22,7 @@
         <h2 class="text-2xl mb-4">Add a Venue</h2>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="venue-name">Name</label>
-            <input name="venu_name"
+            <input name="venue_name"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="venue-name" type="text" placeholder="Enter the Venue name">
         </div>
@@ -70,7 +70,7 @@
             </button>
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                id="submit-button" type="button" hx-post="/venue" hx-target="#form-response" onclick="toggleForm()">
+                id="submit-button" type="button" hx-post="/venues" hx-target="#form-response" onclick="toggleForm()">
                 Submit
             </button>
 
@@ -78,6 +78,7 @@
     </form>
 </div>
 
+<div id="form-response">
 <div class="flex-container">
     <div class="flex-1-1-33 justify-center"></div>
     <div class="flex-1-1-33 justify-center">
@@ -111,6 +112,7 @@
         </tbody>
     </table></div>
     <div class="flex-1-1-33 justify-center"></div>
+</div>
 </div>
 
 

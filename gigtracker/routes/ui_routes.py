@@ -36,6 +36,37 @@ def venues(request: Request, session: SessionDep):
     )
 
 
+@ui_router.post("/venues", include_in_schema=False)
+def create_venue(
+    request: Request,
+    venue_name: Annotated[str, Form()],
+    venue_address: Annotated[str, Form()],
+    venue_city: Annotated[str, Form()],
+    venue_contact_number: Annotated[str, Form()],
+    venue_contact_email: Annotated[str, Form()],
+    venue_capacity: int | None = Form(default=0),
+    venue_notes: str = Form(default=None),
+    session=Depends(get_session),
+):
+    if not venue_capacity:
+        venue_capacity = None
+    venue = Venue(
+        name=venue_name,
+        address=venue_address,
+        city=venue_city,
+        contact_number=venue_contact_number,
+        contact_email=venue_contact_email,
+        capacity=venue_capacity,
+        notes=venue_notes,
+    )
+    session.add(venue)
+    session.commit()
+
+    return templates.TemplateResponse(
+        "venue.html", {"request": request, "venues": [venue]}
+    )
+
+
 @ui_router.post("/gigs", include_in_schema=False)
 def create_gig(
     request: Request,
