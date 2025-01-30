@@ -17,9 +17,9 @@ class ClientBase(SQLModel):
     phone_number: str  # TODO: Change to PhoneNumber
     address: str
     city: str
-    province: str
-    zip: str
-    country: str
+    province: str | None
+    zip: str | None
+    country: str | None
 
 
 class Client(ClientBase, table=True):

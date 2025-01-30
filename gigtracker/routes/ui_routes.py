@@ -6,6 +6,7 @@ from jinja2_fragments.fastapi import Jinja2Blocks
 from sqlmodel import Session, col, select
 
 from gigtracker.schema.base import get_session
+from gigtracker.schema.client import Client
 from gigtracker.schema.gig import Gig
 from gigtracker.schema.venue import Venue
 
@@ -25,6 +26,42 @@ def gigs(request: Request, session: SessionDep):
     result = session.exec(select(Gig)).all()
 
     return templates.TemplateResponse("gigs.html", {"request": request, "gigs": result})
+
+
+@ui_router.get("/clients", include_in_schema=False)
+def get_clients(request: Request, session: SessionDep):
+    result = session.exec(select(Client)).all()
+
+    return templates.TemplateResponse(
+        "clients.html", {"request": request, "clients": result}
+    )
+
+
+@ui_router.post("/clients", include_in_schema=False)
+def create_client(
+    request: Request,
+    client_first_name: Annotated[str, Form()],
+    client_last_name: Annotated[str, Form()],
+    client_address: Annotated[str, Form()],
+    client_city: Annotated[str, Form()],
+    client_contact_number: Annotated[str, Form()],
+    client_contact_email: Annotated[str, Form()],
+    session=Depends(get_session),
+):
+    client = Client(
+        first_name=client_first_name,
+        last_name=client_last_name,
+        address=client_address,
+        city=client_city,
+        phone_number=client_contact_number,
+        email_address=client_contact_email,
+    )
+    session.add(client)
+    session.commit()
+
+    return templates.TemplateResponse(
+        "clients.html", {"request": request, "venues": [client]}
+    )
 
 
 @ui_router.get("/venues", include_in_schema=False)
@@ -95,6 +132,15 @@ def get_venues_as_options(request: Request, session: SessionDep):
 
     return templates.TemplateResponse(
         "snippets/venue_as_options.html", {"request": request, "venues": venues}
+    )
+
+
+@ui_router.get("/load_client_options", include_in_schema=False)
+def get_clients_as_options(request: Request, session: SessionDep):
+    clients = session.exec(select(Client)).all()
+
+    return templates.TemplateResponse(
+        "snippets/clients_as_options.html", {"request": request, "clients": clients}
     )
 
 
