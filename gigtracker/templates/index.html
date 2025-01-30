@@ -34,18 +34,20 @@
             <div class="mb-4">
                 <label id="venue-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-venue" >Venue</label>
                 <select 
-                    id="gig-venue"
-                    hx-get="/load_venue_options"
-                    hx-trigger="load"
-                > </select>
+                    id="gig-venue" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                </select>
+                <div hx-get="/load_venue_options"
+                    hx-trigger="load from:#gig-venue"
+                    hx-target="#gig-venue"></div>   
             </div>
             <div class="mb-4">
                 <label id="client-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-client" >Client</label>
                 <select 
                     id="gig-client"
-                    hx-get="/load_client_options"
-                    hx-trigger="load"
                 > </select>
+                <div hx-get="/load_client_options"
+                    hx-trigger="load from:#gig-client"
+                    hx-target="#gig-client"></div>
             </div>
         </div>
         <div class="flex items-center justify-between">
