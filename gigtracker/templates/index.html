@@ -13,6 +13,11 @@
     </button>
 </div> 
 
+<style>
+    .select-div {
+        margin: 4px;
+    }
+</style>
 <div class="form-container hidden items-center justify-center min-h-screen relative" style="top: 10px;">
     <form class="p-6 rounded shadow-md" style="background-color: cadetblue;">
         <h2 class="text-2xl mb-4">Add a Gig</h2>
@@ -31,19 +36,21 @@
                 id="gig-date" type="date">
         </div>
         <div class="flex items-center justify-between">
-            <div class="mb-4">
+            <div class="select-div">
                 <label id="venue-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-venue" >Venue</label>
-                <select 
-                    id="gig-venue" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <select
+                    id="gig-venue" 
+                    onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" >
                 </select>
                 <div hx-get="/load_venue_options"
                     hx-trigger="load from:#gig-venue"
                     hx-target="#gig-venue"></div>   
             </div>
-            <div class="mb-4">
+            <div class="select-div">
                 <label id="client-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-client" >Client</label>
-                <select 
+                <select
                     id="gig-client"
+                    onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
                 > </select>
                 <div hx-get="/load_client_options"
                     hx-trigger="load from:#gig-client"
