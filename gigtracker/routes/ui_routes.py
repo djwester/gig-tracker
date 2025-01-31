@@ -60,7 +60,7 @@ def create_client(
     session.commit()
 
     return templates.TemplateResponse(
-        "clients.html", {"request": request, "venues": [client]}
+        "clients.html", {"request": request, "clients": [client]}
     )
 
 
