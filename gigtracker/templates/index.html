@@ -50,7 +50,7 @@
                 <label id="client-label" class="block text-gray-700 text-sm font-bold mb-2" for="gig-client" >Client</label>
                 <select
                     id="gig-client"
-                    onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
+                    onchange="maybeAddNew(this.value);"
                 > </select>
                 <div hx-get="/load_client_options"
                     hx-trigger="load from:#gig-client"
