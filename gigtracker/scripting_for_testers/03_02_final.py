@@ -21,8 +21,6 @@ for link in nav_links:
     if not table:
         continue
 
-    # headers = [header.text.strip() for header in table.find_all("th")]
-
     headers = []
     for header in table.find_all("th"):
         headers.append(header.text.strip())

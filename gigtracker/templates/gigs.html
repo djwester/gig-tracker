@@ -6,9 +6,19 @@
     <div></div>
     <div class="flex-col">
         <div>
-            <h1 class="text-2xl mb-4">Upcoming Gigs</h1>
+            <h1 class="text-2xl mb-4">
+                <select id="gig-date-filter"
+                    hx-get="/filter_gigs"
+                    hx-trigger="change"
+                    name="filter"
+                    hx-target="#gigs"
+                >
+                    <option value="upcoming">Upcoming</option>
+                    <option value="past">Past</option>
+                    </div>
+                </select> Gigs</h1>
         </div> 
-        <div>
+        <div id="gigs">
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
@@ -32,4 +42,19 @@
         </div>
     </div>
 </div>
+
+<!-- <script>
+    document.getElementById('gig-date-filter').addEventListener('change', function () {
+        var selectedOption = this.options[this.selectedIndex];
+        var hxGet = selectedOption.getAttribute('data-hx-get');
+        if (hxGet) {
+            fetch(hxGet)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('gigs').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script> -->
 {% endblock %}

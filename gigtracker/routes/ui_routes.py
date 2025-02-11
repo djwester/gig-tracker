@@ -23,7 +23,7 @@ def index(request: Request):
 
 @ui_router.get("/gigs", include_in_schema=False)
 def gigs(request: Request, session: SessionDep):
-    result = session.exec(select(Gig)).all()
+    result = session.exec(select(Gig).where(Gig.date >= date.today())).all()
 
     return templates.TemplateResponse("gigs.html", {"request": request, "gigs": result})
 
@@ -152,4 +152,17 @@ def search(request: Request, session: SessionDep, search: Annotated[str, Form()]
     ).all()
     return templates.TemplateResponse(
         "search.html", {"request": request, "search_results": search_results}
+    )
+
+
+@ui_router.get("/filter_gigs", include_in_schema=False)
+def filter_gigs(request: Request, session: SessionDep, filter: str | None = None):
+    gigs = session.exec(select(Gig)).all()
+    if filter == "past":
+        filtered_gigs = [gig for gig in gigs if gig.date < date.today()]
+    else:
+        filtered_gigs = [gig for gig in gigs if gig.date >= date.today()]
+    return templates.TemplateResponse(
+        "snippets/gig_results.html",
+        {"request": request, "gigs": filtered_gigs},
     )
