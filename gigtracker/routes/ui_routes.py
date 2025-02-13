@@ -109,14 +109,16 @@ def create_gig(
     request: Request,
     gig_date: Annotated[date, Form()],
     gig_name: Annotated[str, Form()],
+    gig_venue: Annotated[int, Form()],
+    gig_client: Annotated[int, Form()],
     session=Depends(get_session),
 ):
     gig = Gig(
         date=gig_date,
         name=gig_name,
         time=time.fromisoformat("03:55"),
-        venue_id=1,
-        client_id=2,
+        venue_id=gig_venue,
+        client_id=gig_client,
     )
     session.add(gig)
     session.commit()

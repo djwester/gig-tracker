@@ -95,26 +95,36 @@
         </button>
     </div>
     <div class="flex-1-1-33 justify-center"></div>
-    <div class="flex-1-1-33 justify-center"><table class="min-w-full bg-white">
-        <thead>
-            <tr>
-                <th
-                    class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                    Name</th>
-                <th
-                    class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                    Address</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for venue in venues %}
-            <tr>
-                <td class="py-2 px-4 border-b border-gray-200">{{ venue.name }}</td>
-                <td class="py-2 px-4 border-b border-gray-200">{{ venue.address }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table></div>
+    <div class="flex-1-1-33 justify-center">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Name</th>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Address</th>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Email Address</th>
+                    <th
+                        class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venue in venues %}
+                <tr>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ venue.name }}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ venue.address }}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ venue.contact_email }}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">{{ venue.contact_number }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <div class="flex-1-1-33 justify-center"></div>
 </div>
 </div>
