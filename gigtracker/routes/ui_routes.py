@@ -78,7 +78,6 @@ def create_venue(
     request: Request,
     venue_name: Annotated[str, Form()],
     venue_address: Annotated[str, Form()],
-    venue_city: Annotated[str, Form()],
     venue_contact_number: Annotated[str, Form()],
     venue_contact_email: Annotated[str, Form()],
     venue_capacity: int | None = Form(default=0),
@@ -90,7 +89,6 @@ def create_venue(
     venue = Venue(
         name=venue_name,
         address=venue_address,
-        city=venue_city,
         contact_number=venue_contact_number,
         contact_email=venue_contact_email,
         capacity=venue_capacity,

@@ -14,7 +14,6 @@ def create_venues(count: int = 5) -> list[int]:
             json={
                 "name": fake.text(max_nb_chars=20),
                 "address": fake.address(),
-                "city": fake.city(),
                 "contact_number": fake.phone_number(),
                 "contact_email": fake.email(),
                 "capacity": fake.random_number(digits=3),
