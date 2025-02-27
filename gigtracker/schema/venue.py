@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 class VenueBase(SQLModel):
     name: str
     address: str
-    city: str
     contact_number: str | None = None
     contact_email: str | None = None
     capacity: int | None = None
