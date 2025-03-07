@@ -21,6 +21,11 @@ def create_venues(count: int = 5) -> list[int]:
             },
         )
         venue_ids.append(response.json()["id"])
+
+    # Create a duplicate venue
+    response = requests.get(f"{base_url}/api/venues/{venue_ids[0]}")
+    response = requests.post(f"{base_url}/api/venues", json=response.json())
+    venue_ids.append(response.json()["id"])
     return venue_ids
 
 

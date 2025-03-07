@@ -28,6 +28,15 @@ def get_venues(session: SessionDep):
     return list(venues)
 
 
+@venue_router.get("/venues/{venue_id}", response_model=VenuePublic)
+def get_venue(venue_id: int, session: SessionDep):
+    venue = session.get(Venue, venue_id)
+    if not venue:
+        raise HTTPException(status_code=404, detail="Venue not found")
+
+    return venue
+
+
 @venue_router.put("/venues/{venue_id}", response_model=VenuePublic)
 def update_venue(venue_id: int, venue: VenueCreate, session: SessionDep):
     db_venue = session.get(Venue, venue_id)
