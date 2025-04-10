@@ -1,7 +1,27 @@
 # Running locally
-Before running you should activate the poetry shell
+
+## Pre-requisites
+This project is setup to use [mise](https://mise.jdx.dev/getting-started.html) to install the necessary tools. You can install mise using brew or winget etc.
+
+Once you have mise you can install the necessary tools by calling it:
+
 ```shell
-poetry shell
+mise install
+```
+
+If you don't have mise (or don't want to use it), you can look in the [.mise.toml](./.mise.toml) file to see what tools and versions you need to install
+
+## Installing
+You can install all necessary dependencies using poetry
+
+```shell
+poetry install
+```
+
+## Running
+Before running you should activate the poetry environment
+```shell
+poetry env activate
 ```
 
 You can then run locally with fastapi:
