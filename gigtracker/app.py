@@ -45,7 +45,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 @app.middleware("http")
 def log_middleware(request: Request, call_next):
-    log_str = f'"{request.method} - {request.url.path}"'
+    log_str = f"{request.method} - {request.url.path}"
 
     logger.info(f"{log_str}")
     response = call_next(request)
